@@ -34,7 +34,7 @@
         </tbody>
       </table>
 
-      <button class="uk-button uk-button-primary" name="button">
+      <button class="uk-button uk-button-primary" name="button" @click="goToCheckout">
         Process to checkout ({{ price }}€)
       </button>
     </div>
@@ -64,6 +64,15 @@ export default {
       addToCart: 'cart/add',
       removeFromCart: 'cart/remove',
     }),
+    goToCheckout() {
+      // Redirect to signin page if not logged in.
+      const isConnected = this.$store.getters['auth/username']
+      if (!isConnected) {
+        this.$router.push('/signin')
+        return
+      }
+      this.$router.push('/checkout')
+    },
   },
 }
 </script>
