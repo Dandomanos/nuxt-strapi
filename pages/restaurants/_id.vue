@@ -21,22 +21,31 @@
                 <p>{{ dish.description }}</p>
               </div>
               <div class="uk-card-footer">
-                <button class="uk-button uk-button-primary">Add to cart</button>
+                <button class="uk-button uk-button-primary" @click="addToCart(dish)">
+                  Add to cart
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="uk-width-expand@m"></div>
+        <div class="uk-width-expand@m">
+          <Cart />
+        </div>
       </div>
     </client-only>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+import Cart from '~/components/Cart.vue'
 import restaurantQuery from '~/apollo/queries/restaurant/restaurant'
 
 export default {
+  components: {
+    Cart,
+  },
   data() {
     return {
       restaurant: Object,
@@ -50,6 +59,12 @@ export default {
         return { id: this.$route.params.id }
       },
     },
+  },
+  methods: {
+    ...mapMutations({
+      addToCart: 'cart/add',
+      removeFromCart: 'cart/remove',
+    }),
   },
 }
 </script>
